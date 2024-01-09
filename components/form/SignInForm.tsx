@@ -1,79 +1,95 @@
-"use client";
+/* eslint-disable react/no-unescaped-entities */
+'use client';
 
-import React from "react";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import Link from "next/link";
+  AtSymbolIcon,
+  KeyIcon,
+  ExclamationCircleIcon,
+} from '@heroicons/react/24/outline';
+import { ArrowRightIcon } from '@heroicons/react/20/solid';
+import { Button } from '@/components/ui/button';
+import { useFormState, useFormStatus } from 'react-dom';
+import { authenticateSaaSUser } from '@/lib/actions/auth';
+import Link from 'next/link';
 
-const SignInForm = () => {
-  const FormSchema = z.object({
-    email: z.string().min(1,'Email is required').email('Invalid email'),
-    password: z.string().min(1, 'Paswword is required').min(8, 'Password must have 8 characters minimum'),
-  });
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-  });
-  const onSubmit = (values:z.infer<typeof FormSchema>) => {
-    console.log(values);
-  };
+
+export default function LoginForm() {
+  const [code, action] = useFormState(authenticateSaaSUser, undefined);
+
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-        <div className="space-y-2">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="mail@exemple.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input type="password" placeholder="Enter your password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <form action={action} className="space-y-3">
+      <div className="flex-1 rounded-lg bg-gray-100 px-6 pb-4 pt-8">
+        <h1 className={`text-2xl`}>
+          Connectez-vous
+        </h1>
+        <p className='mb-4 text-gray-500'>pour continuer avec NextRoom</p>
+        <div className="w-full">
+          <div>
+            <label
+              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <div className="relative">
+              <input
+                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                id="email"
+                type="email"
+                name="email"
+                placeholder="Entrez votre adresse email"
+                required
+              />
+              <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+          </div>
+          <div className="mt-4">
+            <label
+              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              htmlFor="password"
+            >
+              Mot de passe
+            </label>
+            <div className="relative">
+              <input
+                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                id="password"
+                type="password"
+                name="password"
+                placeholder="Entrez votre mot de passe"
+                required
+                minLength={8}
+              />
+              <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+          </div>
         </div>
-        <Button className="w-full mt-6" type="submit">
-          Sign in
-        </Button>
-      </form>
-      <div
-        className="mx-auto my-4 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400
-      after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400"
-      >
-        or
+        <LoginButton />
+        <div className="flex h-8 items-end space-x-1">
+          {code === 'CredentialsSignin' && (
+            <>
+              <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+              <p aria-live="polite" className="text-sm text-red-500">
+                Informations d'identification non valides
+              </p>
+            </>
+          )}
+        </div>
+        <p className='mt-2 text-sm'>
+          Pas de compte ?
+          <Link href="/sign-up" className='hover:text-slate-500'> Inscrivez-vous</Link>
+        </p>
       </div>
-      <p className="text-center text-sm text-grey-600 mt-2">
-        If you don&apos;t have an account, please&nbsp; 
-        <Link className='text-blue-500 hover:underline' href='/sign-up'>Sign up</Link>
-      </p>
-    </Form>
+    </form>
   );
-};
+}
 
-export default SignInForm;
+function LoginButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button className="mt-4 w-full" aria-disabled={pending}>
+      Se connecter <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+    </Button>
+  );
+}

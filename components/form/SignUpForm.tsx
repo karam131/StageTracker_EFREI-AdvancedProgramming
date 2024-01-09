@@ -1,151 +1,119 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
-import React from "react";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+  AtSymbolIcon,
+  KeyIcon,
+  ExclamationCircleIcon,
+} from "@heroicons/react/24/outline";
+import { ArrowRightIcon } from "@heroicons/react/20/solid";
+import { Button } from "@/components/ui/button";
+import { useFormState, useFormStatus } from "react-dom";
+import { signUp } from "@/lib/actions/auth";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
-const FormSchema = z
-  .object({
-    username: z.string().min(1, "Username is required").max(100),
-    email: z.string().min(1, "Email is required").email("Invalid email"),
-    password: z
-      .string()
-      .min(1, "Paswword is required")
-      .min(8, "Password must have 8 characters minimum"),
-    confirmPassword: z.string().min(1, "Paswword confirmation is required"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Passwords do not match",
-  });
+export default function RegisterForm() {
+  const initialState = { message: "", errors: {} };
+  const [state, dispatch] = useFormState(signUp, initialState);
 
-
-const SignUpForm = () => {
-  const router = useRouter();
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    }
-  });
-  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    const response = await fetch('api/user',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: values.username,
-        email: values.email,
-        password: values.password
-      })
-    })
-
-    if(response.ok){
-      router.push('/sign-in')
-    }else{
-      console.error('Registration failed')
-    }
-  };
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-        <div className="space-y-2">
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input placeholder="johndoe" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="mail@exemple.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Enter your password"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="confirmPassword"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Re-Enter the password</FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Re-Enter the password"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <form action={dispatch} className="space-y-3">
+      <div className="flex-1 rounded-lg bg-gray-100 px-6 pb-4 pt-8">
+        <h1 className={` text-2xl`}>Inscrivez-vous</h1>
+        <p className="mb-4 text-gray-500">pour continuer avec NextRoom</p>
+        <div className="w-full">
+          <div>
+            <label
+              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <div className="relative">
+              <input
+                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                id="email"
+                type="email"
+                name="email"
+                placeholder="Entrez votre adresse email"
+                required
+              />
+              <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+            {state.errors?.email ? (
+              <div
+                id="name-error"
+                aria-live="polite"
+                className="mt-2 text-sm text-red-500"
+              >
+                {state.errors.email.map((error: string) => (
+                  <p key={error}>{error}</p>
+                ))}
+              </div>
+            ) : null}
+          </div>
+          <div className="mt-4">
+            <label
+              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              htmlFor="password"
+            >
+              Mot de passe
+            </label>
+            <div className="relative">
+              <input
+                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                id="password"
+                type="password"
+                name="password"
+                placeholder="Entrez votre mot de passe"
+                required
+                minLength={8}
+              />
+              <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+            {state.errors?.password ? (
+              <div
+                id="name-error"
+                aria-live="polite"
+                className="mt-2 text-sm text-red-500"
+              >
+                {state.errors.password.map((error: string) => (
+                  <p key={error}>{error}</p>
+                ))}
+              </div>
+            ) : null}
+          </div>
         </div>
-        <Button className="w-full mt-6" type="submit">
-          Sign up
-        </Button>
-      </form>
-      <div
-        className="mx-auto my-4 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400
-      after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400"
-      >
-        or
+        <RegisterButton />
+        <div className="flex h-15 items-end space-x-1">
+          {state.message ? (
+            <div
+              id="error"
+              aria-live="polite"
+              className="mt-2 text-sm text-red-500"
+            >
+              <p>{state.message}</p>
+            </div>
+          ) : null}
+        </div>
+        <p className="mt-2 text-sm">
+          Vous avez déjà un compte ?
+          <Link href="/sign-in" className="hover:text-slate-500">
+            {" "}
+            Connectez-vous
+          </Link>
+        </p>
       </div>
-      <p className="text-center text-sm text-grey-600 mt-2">
-        If you don&apos;t have an account, please&nbsp;
-        <Link className="text-blue-500 hover:underline" href="/sign-in">
-          Sign in
-        </Link>
-      </p>
-    </Form>
+    </form>
   );
-};
+}
 
-export default SignUpForm;
+function RegisterButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button className="mt-4 w-full" aria-disabled={pending}>
+      S'inscrire <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+    </Button>
+  );
+}
