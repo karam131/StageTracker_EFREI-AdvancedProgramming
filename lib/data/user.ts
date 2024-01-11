@@ -7,7 +7,7 @@ export async function getUser(email: string): Promise<User> {
     const user = await db.user.findUnique({
       where: { email: email },
     });
-    console.log(email);
+    console.log(user);
     return user as User; // Convertit null en undefined
   } catch (error) {
     console.error("Failed to fetch user:", error);
@@ -18,9 +18,12 @@ export async function getUser(email: string): Promise<User> {
 export async function findUserByEmail(email: string) {
   try {
     // Utiliser Prisma pour rechercher l'utilisateur
+    console.log(email);
+
     const user = await db.user.findUnique({
       where: { email: email },
     });
+    console.log("hey");
     return user;
   } catch (error) {
     console.error("findUserByEmail Error:", error);

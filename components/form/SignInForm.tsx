@@ -18,7 +18,7 @@ export default function LoginForm() {
 
   return (
     <form action={action} className="space-y-3">
-      <div className="flex-1 rounded-lg bg-gray-100 px-6 pb-4 pt-8">
+      <div className="flex-1 rounded-lg bg-gray-100 px-6 pb-4 pt-8 ">
         <h1 className={`text-2xl`}>
           Connectez-vous
         </h1>
