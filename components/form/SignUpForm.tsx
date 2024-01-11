@@ -20,7 +20,6 @@ export default function RegisterForm() {
     <form action={dispatch} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-100 px-6 pb-4 pt-8">
         <h1 className={` text-2xl`}>Inscrivez-vous</h1>
-        <p className="mb-4 text-gray-500">pour continuer avec NextRoom</p>
         <div className="w-full">
           <div>
             <label

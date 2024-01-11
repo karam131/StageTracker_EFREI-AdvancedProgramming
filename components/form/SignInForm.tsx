@@ -22,7 +22,6 @@ export default function LoginForm() {
         <h1 className={`text-2xl`}>
           Connectez-vous
         </h1>
-        <p className='mb-4 text-gray-500'>pour continuer avec NextRoom</p>
         <div className="w-full">
           <div>
             <label
