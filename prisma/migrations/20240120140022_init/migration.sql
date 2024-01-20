@@ -1,11 +1,12 @@
 -- CreateEnum
-CREATE TYPE "StaffRole" AS ENUM ('ADMIN', 'EMPLOYEE');
+CREATE TYPE "StaffRole" AS ENUM ('ADMIN', 'TEACHER', 'STUDENT');
 
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "role" "StaffRole" NOT NULL DEFAULT 'STUDENT',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

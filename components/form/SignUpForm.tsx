@@ -82,6 +82,36 @@ export default function RegisterForm() {
               </div>
             ) : null}
           </div>
+          <div className="mt-4">
+            <label
+              className="mb-3 block text-xs font-medium text-gray-900"
+              htmlFor="role"
+            >
+              Rôle
+            </label>
+            <select
+              className="block w-full rounded-md border border-gray-200 bg-white py-2 px-3 text-sm outline-2"
+              id="role"
+              name="role"
+              required
+              defaultValue="STUDENT" // Définir STUDENT comme valeur par défaut
+            >
+              <option value="STUDENT">Étudiant</option>
+              <option value="ADMIN">Admin</option>
+              <option value="TEACHER">Enseignant</option>
+            </select>
+            {state.errors?.role ? (
+              <div
+                id="role-error"
+                aria-live="polite"
+                className="mt-2 text-sm text-red-500"
+              >
+                {state.errors.role.map((error: string) => (
+                  <p key={error}>{error}</p>
+                ))}
+              </div>
+            ) : null}
+          </div>
         </div>
         <RegisterButton />
         <div className="flex h-15 items-end space-x-1">

@@ -14,7 +14,7 @@ model User {
   id       String       @id 
   email    String    @unique
   password String
-  role     StaffRole
+  role     StaffRole @default(STUDENT)
 }
 
 enum StaffRole {

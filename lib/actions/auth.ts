@@ -1,17 +1,21 @@
 "use server";
 
+
+// A MODIFIER POUR LES ROLES
 import { signIn } from '@/auth';
 import { findUserByEmail } from '@/lib/data/user';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { hash } from 'bcrypt';
 import { createFirstUser } from './user';
+import { StaffRole } from '@prisma/client';
 
 const FormSchema = z.object({
     email: z.string().email({
         message: 'Saisissez une adresse email'
     }),
-    password: z.string().min(8, { message: "Votre mot de passe doit faire au minimum 8 caractères" })
+    password: z.string().min(8, { message: "Votre mot de passe doit faire au minimum 8 caractères" }),
+    role: z.nativeEnum(StaffRole)
 });
 
 const CreateUser = FormSchema;
@@ -21,6 +25,7 @@ export type RegisterFormState = {
     errors?: {
         email?: string[],
         password?: string[],
+        role?: string[],
     };
     message?: string | null;
 };
@@ -32,19 +37,19 @@ export async function signUp(
      // Validate form fields using Zod
      const validatedFields = CreateUser.safeParse({
         email: formData.get('email'),
-        password: formData.get('password')
+        password: formData.get('password'),
+        role: formData.get('role')
     });
 
     // If form validation fails, return errors early. Otherwise, continue.
     if (!validatedFields.success) {
         return {
             errors: validatedFields.error.flatten().fieldErrors,
-
             message: "Champs manquants. La création de l'utilisateur a échoué.",
         };
     }
 
-    const { email, password } = validatedFields.data;
+    const { email, password, role } = validatedFields.data;
 
     try {
         const existingUser = await findUserByEmail(email)
@@ -52,7 +57,7 @@ export async function signUp(
             return { message: 'User already exists.' };
         }
         const hashedPassword = await hash(password, 10);
-        await createFirstUser( email, hashedPassword);
+        await createFirstUser(email, hashedPassword, role);
     } catch (error) {
         console.error('Register Error:', error);
         return { message: 'Register Error: Failed to create new user.' };

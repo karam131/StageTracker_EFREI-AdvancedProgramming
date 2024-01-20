@@ -1,12 +1,12 @@
-
 export enum StaffRole {
   ADMIN = 'ADMIN',
-  EMPLOYEE = 'EMPLOYEE',
+  TEACHER = 'TEACHER',
+  STUDENT = 'STUDENT',
 }
 
 export type User = {
   id: string,
   email: string,
   password: string,
-  // role: StaffRole,
+  role: StaffRole,
 }
