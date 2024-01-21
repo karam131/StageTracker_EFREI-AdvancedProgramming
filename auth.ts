@@ -4,6 +4,7 @@ import { authConfig } from './auth.config';
 import { z } from 'zod';
 import bcrypt from 'bcrypt';
 import { getUser } from './lib/data/user';
+import { db } from './lib/db';
  
 
 
@@ -31,4 +32,30 @@ export const { auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async session({token, session}){
+      if(token){
+        session.user!.id= token.id;
+        session.user!.email= token.email;
+        session.user!.role= token.role;
+      }
+      return session
+    },
+    async jwt({token, user}){
+      const dbUser = await db.user.findFirst({
+        where: {
+          email: token.email,
+        },
+      })
+      if(!dbUser){
+        token.id = user!.id
+        return token
+      }
+      return{
+        id: dbUser?.id,
+        email: dbUser?.email,
+        role:dbUser?.role
+      }
+    }
+  }
 });
