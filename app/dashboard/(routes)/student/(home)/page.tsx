@@ -2,11 +2,11 @@ import { auth, signOut } from "@/auth";
 import { PowerIcon } from "@heroicons/react/24/outline";
 import React from "react";
 
-export default function StudentDashboard(){
-  // const session = await auth()
-  // if(session?.user.role !=='ADMIN'){
-  //   throw new Error('You need to be admin.')
-  // }
+export default async function StudentDashboard(){
+  const session = await auth()
+  if(session?.user.role !=='STUDENT'){
+    throw new Error('You need to be student.')
+  }
   return (
     <div className="h-full w-full">
       {/* <form
