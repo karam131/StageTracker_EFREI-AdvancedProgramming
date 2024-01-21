@@ -15,16 +15,23 @@ export default async function TeacherDashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session= await auth();
-  if(session?.user.role !=='TEACHER'){
-    return <AccessDenied/>
+  const session = await auth();
+  if (session?.user.role !== "TEACHER") {
+    return <AccessDenied />;
   }
   return (
     <html lang="en">
       <body>
-        <main className="h-[100dvh] w-full flex ">
-          <NavbarDashboard />
-          {children}
+        <main className="h-[100dvh] w-full">
+          <div className="flex flex-col h-full w-full">
+            <div className="flex h-[80px] w-full">
+              <NavbarDashboard
+                role={session.user.role}
+                email={session.user.email}
+              />
+            </div>
+            <div className="flex h-full w-full">{children}</div>
+          </div>
         </main>
       </body>
     </html>
