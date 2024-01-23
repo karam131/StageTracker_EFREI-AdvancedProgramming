@@ -22,3 +22,18 @@ enum StaffRole {
   TEACHER
   STUDENT
 }
+
+model Internship {
+  id                 String   @id @default(uuid())
+  companyName        String
+  companyAddress     String
+  companyCity        String
+  companyZipCode     String
+  tutorName          String
+  tutorPhone         String
+  tutorEmail         String
+  internshipDescription String
+  salary             String
+  fileUrl            String?   // URL du fichier téléchargé
+}
+

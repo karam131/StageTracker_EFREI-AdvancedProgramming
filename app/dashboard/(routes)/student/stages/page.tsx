@@ -1,11 +1,12 @@
+import { auth } from "@/auth";
+import NewInternship from "@/components/newInternship";
 
-import React from "react";
-
-export default function Stage() {
- 
+export default async function Internship() {
+  // const session = await auth();
+  // session?.user.name
   return (
-    <div>
-      stage
+    <div className="w-full h-full">
+      <NewInternship/>
     </div>
   );
 }
