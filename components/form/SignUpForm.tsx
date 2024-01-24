@@ -24,6 +24,70 @@ export default function RegisterForm() {
           <div>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              htmlFor="firstName"
+            >
+              Prénom
+            </label>
+            <div className="relative">
+              <input
+                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                id="firstName"
+                type="text"
+                name="firstName"
+                placeholder="Entrez votre prénom"
+                required
+              />
+              {/* Icône ou autre élément visuel si nécessaire */}
+            </div>
+            {/* Gestion des erreurs pour le champ Prénom */}
+            {state.errors?.firstName && (
+              <div
+                id="firstName-error"
+                aria-live="polite"
+                className="mt-2 text-sm text-red-500"
+              >
+                {state.errors.firstName.map((error: string) => (
+                  <p key={error}>{error}</p>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Champ Nom */}
+          <div className="mt-4">
+            <label
+              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              htmlFor="lastName"
+            >
+              Nom
+            </label>
+            <div className="relative">
+              <input
+                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                id="lastName"
+                type="text"
+                name="lastName"
+                placeholder="Entrez votre nom"
+                required
+              />
+              {/* Icône ou autre élément visuel si nécessaire */}
+            </div>
+            {/* Gestion des erreurs pour le champ Nom */}
+            {state.errors?.lastName && (
+              <div
+                id="lastName-error"
+                aria-live="polite"
+                className="mt-2 text-sm text-red-500"
+              >
+                {state.errors.lastName.map((error: string) => (
+                  <p key={error}>{error}</p>
+                ))}
+              </div>
+            )}
+          </div>
+          <div>
+            <label
+              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="email"
             >
               Email

@@ -35,9 +35,11 @@ export const { auth, signIn, signOut } = NextAuth({
   callbacks: {
     async session({token, session}){
       if(token){
-        session.user!.id= token.id;
-        session.user!.email= token.email;
-        session.user!.role= token.role;
+        session.user!.id = token.id;
+        session.user!.firstname = token.firstname;  // Champ ajouté
+        session.user!.lastname = token.lastname;    // Champ ajouté
+        session.user!.email = token.email;
+        session.user!.role = token.role;
       }
       return session
     },
@@ -53,6 +55,8 @@ export const { auth, signIn, signOut } = NextAuth({
       }
       return{
         id: dbUser?.id,
+        firstname: dbUser?.firstname,  
+        lastname: dbUser?.lastname,
         email: dbUser?.email,
         role:dbUser?.role
       }

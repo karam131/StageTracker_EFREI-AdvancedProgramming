@@ -6,15 +6,18 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
+
 model User {
-  id       String       @id 
-  email    String    @unique
-  password String
-  role     StaffRole @default(STUDENT)
+  id        String    @id
+  firstname String
+  lastname  String
+  email     String    @unique
+  password  String
+  role      StaffRole @default(STUDENT)
 }
 
 enum StaffRole {
@@ -24,16 +27,14 @@ enum StaffRole {
 }
 
 model Internship {
-  id                 String   @id @default(uuid())
-  companyName        String
-  companyAddress     String
-  companyCity        String
-  companyZipCode     String
-  tutorName          String
-  tutorPhone         String
-  tutorEmail         String
+  id                    String @id @default(uuid())
+  companyName           String
+  companyAddress        String
+  companyCity           String
+  companyZipCode        String
+  tutorName             String
+  tutorPhone            String
+  tutorEmail            String
   internshipDescription String
-  salary             String
-  fileUrl            String?   // URL du fichier téléchargé
+  salary                String
 }
-
