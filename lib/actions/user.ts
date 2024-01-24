@@ -1,7 +1,6 @@
 import { generateUUID } from "@/lib/utils";
 import { db } from "../db";
 import { StaffRole } from "@prisma/client";
-// A MDODIFIER POUR LES ROLES
 export async function createFirstUser(firstName: string, lastName: string, email: string, password: string, role: StaffRole) {
     const newUserUUID = generateUUID();
 

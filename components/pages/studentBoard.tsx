@@ -10,11 +10,10 @@ import {
 
 export default function studentBoard() {
   const headers: { [key: string]: string } = {
-    year: "Year",
     status: "Status",
     name: "Name",
     company: "Company",
-    period: "Period",
+    salary: "Salary",
     action: "Action",
   };
   return (

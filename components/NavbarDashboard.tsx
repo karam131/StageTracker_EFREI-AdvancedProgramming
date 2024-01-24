@@ -5,17 +5,20 @@ import React from "react";
 import Signout from "./signOutButton/signout";
 
 export default function NavbarDashboard({
+  firstname,
+  lastname,
   role,
   email,
 }: {
+  firstname: string,
+  lastname: string,
   role: string;
   email: string;
 }) {
   return (
     <div className="flex bg-[#000832] w-full h-full text-white">
       <div className="h-full w-[250px] ml-10 flex flex-col justify-center items-start">
-        <h1>{role}</h1>
-        <h5>{email}</h5>
+        <h1>{firstname} {lastname}</h1>
       </div>
       <div className="flex justify-center items-center text-sm gap-10 ml-[200px] ">
         {/* menu */}

@@ -1,13 +1,19 @@
 "use client";
 import SubmitButton from "@/components/submitButton/submitButton";
-import { ChangeEvent, ChangeEventHandler } from "react";
+import { ChangeEvent, ChangeEventHandler, FormEvent, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
+import { useFormState, useFormStatus } from "react-dom";
+import { createInternship } from "@/lib/actions/internship";
 export default function NewInternship() {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const supabase = createClient(
+    "https://vrzoxvlgupmhhwghpgpm.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyem94dmxndXBtaGh3Z2hwZ3BtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4MTEwMjAsImV4cCI6MjAyMDM4NzAyMH0.CKAVL1afCsnwaI3B1g4r45-dN3et_bepSBp0apQ9v6s"
+  );
+  const initialState = { message: "", errors: {} };
+  const [state, dispatch] = useFormState(createInternship, initialState);
+
   const handleUpload = async (e: ChangeEvent<HTMLInputElement>) => {
-    const supabase = createClient(
-      "https://vrzoxvlgupmhhwghpgpm.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyem94dmxndXBtaGh3Z2hwZ3BtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4MTEwMjAsImV4cCI6MjAyMDM4NzAyMH0.CKAVL1afCsnwaI3B1g4r45-dN3et_bepSBp0apQ9v6s"
-    );
     let file;
     if (e.target.files) {
       file = e.target.files[0];
@@ -24,7 +30,7 @@ export default function NewInternship() {
 
   return (
     <div className="w-full h-full flex justify-center items-center">
-      <form className="flex flex-col justify-center items-center w-[800px] h-fit gap-10  p-10 ">
+      <form className="flex flex-col justify-center items-center w-[800px] h-fit gap-10  p-10 "action={dispatch} >
         {/* Informations sur l'entreprise */}
         <div className="flex-flex-col p-5 border-[1px] border-black rounded-lg w-full space-y-5 ">
           <div className="flex w-full gap-5 ">
@@ -36,6 +42,7 @@ export default function NewInternship() {
                 placeholder="Name"
                 required
                 className="border-b-[1px] border-grey p-3"
+                // onChange={handleInputChange}
               />
             </div>
             <div className="flex flex-col w-[50%] gap-3">
@@ -45,6 +52,7 @@ export default function NewInternship() {
                 name="companyAddress"
                 placeholder="Address"
                 required
+                // onChange={handleInputChange}
                 className="border-b-[1px] border-grey p-3"
               />
             </div>
@@ -57,6 +65,7 @@ export default function NewInternship() {
                 name="companyCity"
                 placeholder="City"
                 required
+                // onChange={handleInputChange}
                 className="border-b-[1px] border-grey p-3"
               />
             </div>
@@ -67,6 +76,7 @@ export default function NewInternship() {
                 name="companyZipCode"
                 placeholder="Zip"
                 required
+                // onChange={handleInputChange}
                 className="border-b-[1px] border-grey p-3"
               />
             </div>
@@ -82,6 +92,7 @@ export default function NewInternship() {
                 name="tutorName"
                 placeholder=""
                 required
+                // onChange={handleInputChange}
                 className="border-b-[1px] border-grey p-3"
               />
             </div>
@@ -92,6 +103,7 @@ export default function NewInternship() {
                 name="tutorPhone"
                 placeholder=""
                 required
+                // onChange={handleInputChange}
                 className="border-b-[1px] border-grey p-3"
               />
             </div>
@@ -103,6 +115,7 @@ export default function NewInternship() {
               name="tutorEmail"
               placeholder=""
               required
+              // onChange={handleInputChange}
               className="border-b-[1px] border-grey p-3 w-[90%]"
             />
           </div>
@@ -116,6 +129,7 @@ export default function NewInternship() {
               placeholder="Description"
               required
               className="border-[1px] border-grey rounded-sm p-3"
+              // onChange={handleInputChange}
             ></textarea>
           </div>
           <div className="flex flex-col gap-3">
@@ -126,6 +140,7 @@ export default function NewInternship() {
                 name="salary"
                 placeholder="Salary"
                 required
+                // onChange={handleInputChange}
                 className="border-b-[1px] border-grey p-3 w-[90%]"
               />
               <h2 className="flex self-end">€</h2>
