@@ -11,7 +11,7 @@ export default function NewInternship({ user }: { user: User }) {
   return (
     <div className="w-full h-full flex justify-center items-center">
       <form
-        className="flex flex-col justify-center items-center w-[800px] h-fit gap-10  p-10 "
+        className="flex flex-col justify-center items-center w-[800px] h-fit gap-10  p-10 overflow-y-auto "
         action={dispatch}
       >
         {/* Informations sur l'entreprise */}

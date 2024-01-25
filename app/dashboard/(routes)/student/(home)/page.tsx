@@ -1,6 +1,5 @@
 import { auth, signOut } from "@/auth";
 import StudentBoard from "@/components/pages/studentBoard";
-import { PowerIcon } from "@heroicons/react/24/outline";
 import React from "react";
 
 export default async function StudentDashboard(){

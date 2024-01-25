@@ -24,7 +24,7 @@ export default async function StudentDashboardLayout({
     <html lang="en">
       <body>
         <main className="h-[100dvh] w-full">
-          <div className="flex flex-col h-full w-full">
+          <div className="flex flex-col justify-start h-full w-full">
             <div className="flex min-h-[80px] w-full">
               <NavbarDashboard
                 firstname={session.user.firstname}
@@ -33,7 +33,7 @@ export default async function StudentDashboardLayout({
                 email={session.user.email}
               />
             </div>
-            <div className="flex h-full w-full">{children}</div>
+            <div className="flex w-full">{children}</div>
           </div>
         </main>
       </body>
