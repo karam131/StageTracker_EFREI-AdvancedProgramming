@@ -10,11 +10,11 @@ import {
 
 export default function studentBoard() {
   const headers: { [key: string]: string } = {
-    status: "Status",
-    name: "Name",
-    company: "Company",
-    salary: "Salary",
-    action: "Action",
+    status: "Status", // status : pending, accepted, rejected
+    name: "Name",  // contiendra nom prenom
+    company: "Company", // company name
+    salary: "Salary", // salaire
+    action: "Action", // voir détail
   };
   return (
     <div className=" w-[80%] h-[70dvh] overflow-y-scroll hide-scrollbar">

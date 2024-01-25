@@ -1,3 +1,5 @@
+import { Internship } from "@prisma/client"
+
 export enum StaffRole {
   ADMIN = 'ADMIN',
   TEACHER = 'TEACHER',
@@ -11,4 +13,5 @@ export type User = {
   email: string,
   password: string,
   role: StaffRole,
+  internships: Internship,
 }

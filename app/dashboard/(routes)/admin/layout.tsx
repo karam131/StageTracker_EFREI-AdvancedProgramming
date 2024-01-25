@@ -25,8 +25,10 @@ export default async function AdminDashboardLayout({
       <body>
         <main className="h-[100dvh] w-full">
           <div className="flex flex-col h-full w-full">
-            <div className="flex h-[80px] w-full">
+          <div className="flex min-h-[80px] w-full">
               <NavbarDashboard
+                firstname={session.user.firstname}
+                lastname={session.user.lastname}
                 role={session.user.role}
                 email={session.user.email}
               />

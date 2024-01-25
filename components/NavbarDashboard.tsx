@@ -18,7 +18,7 @@ export default function NavbarDashboard({
   return (
     <div className="flex bg-[#000832] w-full h-full text-white">
       <div className="h-full w-[250px] ml-10 flex flex-col justify-center items-start">
-        <h1>{firstname} {lastname}</h1>
+        <h1>Bienvenue {firstname} {lastname}</h1>
       </div>
       <div className="flex justify-center items-center text-sm gap-10 ml-[200px] ">
         {/* menu */}

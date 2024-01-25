@@ -1,6 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+// Définition du générateur Prisma et de la source de données
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,30 +9,44 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model User {
-  id        String    @id
-  firstname String
-  lastname  String
-  email     String    @unique
-  password  String
-  role      StaffRole @default(STUDENT)
-}
-
 enum StaffRole {
   ADMIN
   TEACHER
   STUDENT
 }
 
+enum InternshipStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model User {
+  id          String       @id
+  firstname   String
+  lastname    String
+  email       String       @unique
+  password    String
+  role        StaffRole
+  internships Internship[]
+}
+
 model Internship {
-  id                    String @id @default(uuid())
-  companyName           String
-  companyAddress        String
-  companyCity           String
-  companyZipCode        String
-  tutorName             String
-  tutorPhone            String
-  tutorEmail            String
-  internshipDescription String
-  salary                String
+  id             String           @id @default(uuid())
+  // studentId stock la clé étrangère id de User
+  studentId      String
+  companyName    String
+  companyAddress String
+  companyCity    String
+  companyZipCode String
+  tutorName      String
+  tutorPhone     String
+  tutorEmail     String
+  description    String
+  salary         String
+  status         InternshipStatus @default(PENDING)
+  contractUrl    String?
+  student        User             @relation(fields: [studentId], references: [id])
+  // teacherId      String?
+  // teacher        User?            @relation(fields: [teacherId], references: [id])
 }

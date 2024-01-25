@@ -4,33 +4,16 @@ import { ChangeEvent, ChangeEventHandler, FormEvent, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { useFormState, useFormStatus } from "react-dom";
 import { createInternship } from "@/lib/actions/internship";
-export default function NewInternship() {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const supabase = createClient(
-    "https://vrzoxvlgupmhhwghpgpm.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyem94dmxndXBtaGh3Z2hwZ3BtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4MTEwMjAsImV4cCI6MjAyMDM4NzAyMH0.CKAVL1afCsnwaI3B1g4r45-dN3et_bepSBp0apQ9v6s"
-  );
+import { User } from "@/lib/definitions/user";
+export default function NewInternship({ user }: { user: User }) {
   const initialState = { message: "", errors: {} };
   const [state, dispatch] = useFormState(createInternship, initialState);
-
-  const handleUpload = async (e: ChangeEvent<HTMLInputElement>) => {
-    let file;
-    if (e.target.files) {
-      file = e.target.files[0];
-    }
-    const { data, error } = await supabase.storage
-      .from("contractFile")
-      .upload("public/" + file?.name, file as File);
-    if (data) {
-      console.log(data);
-    } else if (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <div className="w-full h-full flex justify-center items-center">
-      <form className="flex flex-col justify-center items-center w-[800px] h-fit gap-10  p-10 "action={dispatch} >
+      <form
+        className="flex flex-col justify-center items-center w-[800px] h-fit gap-10  p-10 "
+        action={dispatch}
+      >
         {/* Informations sur l'entreprise */}
         <div className="flex-flex-col p-5 border-[1px] border-black rounded-lg w-full space-y-5 ">
           <div className="flex w-full gap-5 ">
@@ -42,7 +25,6 @@ export default function NewInternship() {
                 placeholder="Name"
                 required
                 className="border-b-[1px] border-grey p-3"
-                // onChange={handleInputChange}
               />
             </div>
             <div className="flex flex-col w-[50%] gap-3">
@@ -52,7 +34,6 @@ export default function NewInternship() {
                 name="companyAddress"
                 placeholder="Address"
                 required
-                // onChange={handleInputChange}
                 className="border-b-[1px] border-grey p-3"
               />
             </div>
@@ -65,7 +46,6 @@ export default function NewInternship() {
                 name="companyCity"
                 placeholder="City"
                 required
-                // onChange={handleInputChange}
                 className="border-b-[1px] border-grey p-3"
               />
             </div>
@@ -76,7 +56,6 @@ export default function NewInternship() {
                 name="companyZipCode"
                 placeholder="Zip"
                 required
-                // onChange={handleInputChange}
                 className="border-b-[1px] border-grey p-3"
               />
             </div>
@@ -92,7 +71,6 @@ export default function NewInternship() {
                 name="tutorName"
                 placeholder=""
                 required
-                // onChange={handleInputChange}
                 className="border-b-[1px] border-grey p-3"
               />
             </div>
@@ -103,7 +81,6 @@ export default function NewInternship() {
                 name="tutorPhone"
                 placeholder=""
                 required
-                // onChange={handleInputChange}
                 className="border-b-[1px] border-grey p-3"
               />
             </div>
@@ -115,7 +92,6 @@ export default function NewInternship() {
               name="tutorEmail"
               placeholder=""
               required
-              // onChange={handleInputChange}
               className="border-b-[1px] border-grey p-3 w-[90%]"
             />
           </div>
@@ -125,11 +101,10 @@ export default function NewInternship() {
           <div className="flex flex-col gap-3">
             <h1>Description</h1>
             <textarea
-              name="internshipDescription"
+              name="description"
               placeholder="Description"
               required
               className="border-[1px] border-grey rounded-sm p-3"
-              // onChange={handleInputChange}
             ></textarea>
           </div>
           <div className="flex flex-col gap-3">
@@ -155,9 +130,6 @@ export default function NewInternship() {
             name="fileUpload"
             required
             className="block file:rounded-md file:bg-black file:text-white file:h-9 w-auto text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-            onChange={(e) => {
-              handleUpload(e);
-            }}
           />
         </div>
         <div className="flex flex-col justify-center items-center">
