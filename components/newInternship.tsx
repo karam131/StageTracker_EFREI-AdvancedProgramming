@@ -1,7 +1,5 @@
 "use client";
 import SubmitButton from "@/components/submitButton/submitButton";
-import { ChangeEvent, ChangeEventHandler, FormEvent, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
 import { useFormState, useFormStatus } from "react-dom";
 import { createInternship } from "@/lib/actions/internship";
 import { User } from "@/lib/definitions/user";

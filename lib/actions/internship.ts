@@ -2,7 +2,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { generateUUID } from "@/lib/utils";
 import { db } from "../db";
-import { InternshipData, InternshipStatus } from "../definitions/internship";
+import { Internship, InternshipStatus } from "../definitions/internship";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
@@ -119,7 +119,7 @@ export async function createInternship(
   redirect("/dashboard/student/");
 }
 
-export async function createInternshipDb(data: InternshipData) {
+export async function createInternshipDb(data: Internship) {
   const newInternshipId = generateUUID();
   try {
     const newInternship = await db.internship.create({

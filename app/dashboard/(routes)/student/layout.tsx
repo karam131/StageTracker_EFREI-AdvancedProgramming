@@ -16,7 +16,6 @@ export default async function StudentDashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-  console.log(session);
   if (session?.user.role !== "STUDENT") {
     return <AccessDenied />;
   }

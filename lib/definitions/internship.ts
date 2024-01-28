@@ -5,7 +5,7 @@ export enum InternshipStatus{
   REJECTED='REJECTED',
 }
 
-export type InternshipData = {
+export type Internship = {
   studentId: string,  // manquant
   companyName: string,
   companyAddress: string,

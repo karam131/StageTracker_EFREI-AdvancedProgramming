@@ -17,7 +17,6 @@ export default async function RootLayout({
 }) {
   // const session = await auth()
   // console.log(session?.user.role);
-
   return (
     <html lang="en">
       <body className={inter.className}>
